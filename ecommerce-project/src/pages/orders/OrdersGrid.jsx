@@ -8,7 +8,6 @@ export function OrdersGrid({ orders }) {
         return (
           <div key={order.id} className="order-container">
             <OrderHeader order={order} />
-
             <OrderDetailsGrid order={order} />
           </div>
         );
