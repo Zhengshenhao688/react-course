@@ -1,5 +1,5 @@
 import "./NotFoundPage.css";
-import { Header } from "../components/Header.jsx";
+import { Header } from "../../components/Header.jsx";
 
 export function NotFoundPage({cart}) {
   return (
