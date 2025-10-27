@@ -2,7 +2,7 @@ import axios from "axios";
 import { Routes, Route } from "react-router";
 import { useEffect, useState } from "react";
 
-import { Homepage } from "./pages/home/HomePage";
+import { HomePage } from "./pages/home/HomePage";
 import { CheckoutPage } from "./pages/checkout/CheckoutPage";
 import { OrdersPage } from "./pages/orders/OrdersPage";
 import { TrackingPage } from "./pages/tracking/TrackingPage";
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <Routes>
-      <Route index element={<Homepage cart={cart} loadCart={loadCart} />} />
+      <Route index element={<HomePage cart={cart} loadCart={loadCart} />} />
       <Route
         path="checkout"
         element={<CheckoutPage cart={cart} loadCart={loadCart} />}
