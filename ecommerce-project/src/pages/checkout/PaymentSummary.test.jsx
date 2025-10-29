@@ -1,12 +1,16 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, useLocation } from "react-router";
+import userEvent from "@testing-library/user-event";
+import axios from "axios";
 import { PaymentSummary } from "./PaymentSummary";
-//import { lazy } from "react";
+
+vi.mock("axios");
 
 describe("PaymentSummary component", () => {
   let paymentSummary;
   let loadCart;
+  let user;
 
   beforeEach(() => {
     paymentSummary = {
@@ -19,6 +23,8 @@ describe("PaymentSummary component", () => {
     };
 
     loadCart = vi.fn();
+
+    user = userEvent.setup();
   });
 
   it("displays the correct ditails", async () => {
@@ -37,20 +43,43 @@ describe("PaymentSummary component", () => {
     ).toBeInTheDocument();
 
     expect(
-      screen.getByTestId('payment-summary-shipping-cost')
-    ).toHaveTextContent('$4.99');
+      screen.getByTestId("payment-summary-shipping-cost")
+    ).toHaveTextContent("$4.99");
 
     expect(
-      screen.getByTestId('payment-summary-total-before-tax')
-    ).toHaveTextContent('$47.74');
+      screen.getByTestId("payment-summary-total-before-tax")
+    ).toHaveTextContent("$47.74");
 
-    expect(
-      screen.getByTestId('payment-summary-tax')
-    ).toHaveTextContent('$4.77')
+    expect(screen.getByTestId("payment-summary-tax")).toHaveTextContent(
+      "$4.77"
+    );
 
-    expect(
-      screen.getByTestId('payment-summary-total')
-    ).toHaveTextContent('$52.51')
+    expect(screen.getByTestId("payment-summary-total")).toHaveTextContent(
+      "$52.51"
+    );
+  });
 
+  it("places the order", async () => {
+    function Location() {
+      const location = useLocation();
+      return <div data-testid="url-path">{location.pathname}</div>;
+    }
+
+    render(
+      <MemoryRouter>
+        <PaymentSummary
+          loadCart={loadCart}
+          paymentSummary={paymentSummary}
+        ></PaymentSummary>
+        <Location />
+      </MemoryRouter>
+    );
+
+    const placeOrderButton = screen.getByTestId("place-order-button");
+    await user.click(placeOrderButton);
+
+    expect(axios.post).toHaveBeenCalledWith('/api/orders');
+    expect(loadCart).toHaveBeenCalled();
+    expect(screen.getByTestId('url-path')).toHaveTextContent('/order');
   });
 });
