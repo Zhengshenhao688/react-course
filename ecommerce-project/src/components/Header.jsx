@@ -10,17 +10,17 @@ export function Header({ cart }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const searchText = searchParams.get('search');
+  const searchText = searchParams.get("search");
 
-  const [search, setSearch] = useState(searchText || '');
+  const [search, setSearch] = useState(searchText || "");
 
   const updateSearchInput = (event) => {
     setSearch(event.target.value);
-  }
+  };
 
   const searchProducts = () => {
-    navigate(`/?search=${search}`)
-  }
+    navigate(`/?search=${search}`);
+  };
 
   let totalQuantity = 0;
 
@@ -32,31 +32,48 @@ export function Header({ cart }) {
     <div className="header">
       <div className="left-section">
         <NavLink to="/" className="header-link">
-          <img className="logo" src={LogoWhite} />
-          <img className="mobile-logo" src={MobileLogoWhite} />
+          <img className="logo" data-testid="header-logo" src={LogoWhite} />
+          <img
+            className="mobile-logo"
+            data-testid="header-mobile-logo"
+            src={MobileLogoWhite}
+          />
         </NavLink>
       </div>
 
       <div className="middle-section">
         <input
           className="search-bar"
+          data-testid="header-search-bar"
           type="text"
           placeholder="Search"
           value={search}
           onChange={updateSearchInput}
         />
 
-        <button className="search-button" onClick={searchProducts}>
+        <button
+          className="search-button"
+          data-testid="header-search-button"
+          onClick={searchProducts}
+        >
           <img className="search-icon" src={SearchIcon} />
         </button>
       </div>
 
       <div className="right-section">
-        <NavLink className="orders-link header-link" to="/orders">
+        <NavLink
+          className="orders-link header-link"
+          data-testid="header-orders-link"
+          to="/orders"
+        >
           <span className="orders-text">Orders</span>
         </NavLink>
 
-        <NavLink className="cart-link header-link" to="/checkout">
+        <NavLink
+          className="cart-link header-link"
+          data-testid="header-cart-link"
+          to="/checkout"
+        >
           <img className="cart-icon" src={CartIcon} />
           <div className="cart-quantity">{totalQuantity}</div>
           <div className="cart-text">Cart</div>
