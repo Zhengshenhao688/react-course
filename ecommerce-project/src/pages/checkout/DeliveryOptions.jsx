@@ -26,12 +26,14 @@ export function DeliveryOptions({ deliveryOptions, cartItem, loadCart }) {
             key={deliveryOption.id}
             className="delivery-option"
             onClick={updateDeliveryOption}
+            data-testid="delivery-option"
           >
             <input
               type="radio"
               checked={deliveryOption.id === cartItem.deliveryOptionId}
               onChange={() => {}}
               className="delivery-option-input"
+              data-testid="delivery-option-input"
               name={`delivery-option-${cartItem.productId}`}
             />
             <div>
