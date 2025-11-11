@@ -1,4 +1,4 @@
-import { it, expect, describe, vi, beforeEach } from "vitest";
+import { it, expect, describe, vi, beforeEach, type Mocked } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import userEvent from "@testing-library/user-event";
@@ -6,16 +6,17 @@ import axios from "axios";
 import { HomePage } from "./HomePage";
 
 vi.mock("axios");
+const mockedAxios = axios as unknown as Mocked<typeof axios>;
 
 describe("HomePage component", () => {
-  let loadCart;
-  let user;
+  let loadCart: ReturnType<typeof vi.fn>;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     loadCart = vi.fn();
     user = userEvent.setup();
 
-    axios.get.mockImplementation(async (urlPath) => {
+    mockedAxios.get.mockImplementation(async (urlPath: string) => {
       if (urlPath === "/api/products") {
         return {
           data: [

@@ -1,10 +1,12 @@
 import { it, expect, describe, vi, beforeEach } from "vitest";
+import "@testing-library/jest-dom";
 import { render, screen, within } from "@testing-library/react";
 import { ProductsGrid } from "./ProductsGrid";
+import type { ProductType } from "./Product";
 
 describe("ProductsGrid cpmponent", () => {
-  let products;
-  let loadCart;
+  let products: ProductType[];
+  let loadCart: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     products = [

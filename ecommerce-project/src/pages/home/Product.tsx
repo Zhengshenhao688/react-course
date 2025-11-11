@@ -1,10 +1,27 @@
 import { formatMoney } from "../../utils/money";
 import CheckmarkIcon from "../../assets/images/icons/checkmark.png";
 import axios from "axios";
-import { useState } from "react";
-export function Product({ product, loadCart }) {
-  const [quantity, setQuantity] = useState(1);
-  const [showAddedMessage, setShowAddedMessage] = useState(false);
+import { useState, type ChangeEvent } from "react";
+
+type Rating = { stars: number; count: number };
+
+export type ProductType = {
+  id: string;
+  image: string;
+  name: string;
+  rating: Rating;
+  priceCents: number;
+  keywords?: string[];
+};
+
+type Props = {
+  product: ProductType;
+  loadCart: () => Promise<void> | void;
+};
+
+export function Product({ product, loadCart }: Props) {
+  const [quantity, setQuantity] = useState<number>(1);
+  const [showAddedMessage, setShowAddedMessage] = useState<boolean>(false);
 
   const addToCart = async () => {
     await axios.post("/api/cart-items", {
@@ -20,7 +37,7 @@ export function Product({ product, loadCart }) {
     }, 2000);
   };
 
-  const selectQuantity = (event) => {
+  const selectQuantity = (event: ChangeEvent<HTMLSelectElement>) => {
     const quantitySelected = Number(event.target.value);
     setQuantity(quantitySelected);
   };
@@ -32,6 +49,7 @@ export function Product({ product, loadCart }) {
           className="product-image"
           data-testid="product-image"
           src={product.image}
+          alt={product.name}
         />
       </div>
 
@@ -42,6 +60,7 @@ export function Product({ product, loadCart }) {
           className="product-rating-stars"
           data-testid="product-rating-stars-image"
           src={`images/ratings/rating-${product.rating.stars * 10}.png`}
+          alt={`${product.rating.stars} stars`}
         />
         <div className="product-rating-count link-primary">
           {product.rating.count}
@@ -53,7 +72,7 @@ export function Product({ product, loadCart }) {
       <div className="product-quantity-container">
         <select
           data-testid="product-quantity-selector"
-          value={quantity}
+          value={String(quantity)}
           onChange={selectQuantity}
         >
           <option value="1">1</option>
@@ -77,7 +96,7 @@ export function Product({ product, loadCart }) {
           opacity: showAddedMessage ? 1 : 0,
         }}
       >
-        <img src={CheckmarkIcon} />
+        <img src={CheckmarkIcon} alt="added" />
         Added
       </div>
 
