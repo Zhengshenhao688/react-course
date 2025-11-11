@@ -6,7 +6,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { formatMoney } from "../../utils/money";
-import type { ProductType } from "../home/Product";
+import type { ProductType } from "../../types";
 
 type CartItem = {
   productId: string;

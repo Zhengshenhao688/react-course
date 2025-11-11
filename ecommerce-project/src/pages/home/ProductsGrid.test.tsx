@@ -2,7 +2,7 @@ import { it, expect, describe, vi, beforeEach } from "vitest";
 import "@testing-library/jest-dom";
 import { render, screen, within } from "@testing-library/react";
 import { ProductsGrid } from "./ProductsGrid";
-import type { ProductType } from "./Product";
+import type { ProductType } from "../../types";
 
 describe("ProductsGrid cpmponent", () => {
   let products: ProductType[];

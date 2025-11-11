@@ -2,17 +2,7 @@ import { formatMoney } from "../../utils/money";
 import CheckmarkIcon from "../../assets/images/icons/checkmark.png";
 import axios from "axios";
 import { useState, type ChangeEvent } from "react";
-
-type Rating = { stars: number; count: number };
-
-export type ProductType = {
-  id: string;
-  image: string;
-  name: string;
-  rating: Rating;
-  priceCents: number;
-  keywords?: string[];
-};
+import type { ProductType } from "../../types";
 
 type Props = {
   product: ProductType;

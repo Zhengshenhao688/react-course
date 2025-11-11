@@ -2,9 +2,11 @@ import { it, expect, describe, vi, beforeEach } from "vitest";
 import type { Mocked } from "vitest";
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import { Product, type ProductType } from "./Product";
+import { Product } from "./Product";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
+import type { ProductType } from "../../types";
+
 
 vi.mock("axios");
 const mockedAxios = axios as Mocked<typeof axios>;

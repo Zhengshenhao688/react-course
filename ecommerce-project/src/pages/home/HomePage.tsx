@@ -2,15 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Header } from "../../components/Header";
 import { ProductsGrid } from "./ProductsGrid";
-import type { ProductType } from "./Product";
+import type { ProductType } from "../../types";
 import "./HomePage.css";
 import { useSearchParams } from "react-router";
-
-type CartItem = {
-  productId: string;
-  quantity: number;
-  deliveryOptionId: string;
-};
+import type { CartItem } from "../../types";
 
 type HomePageProps = {
   cart: CartItem[];
