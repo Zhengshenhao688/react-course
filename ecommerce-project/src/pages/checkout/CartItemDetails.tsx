@@ -1,18 +1,35 @@
 import axios from "axios";
-import { Fragment } from "react";
+import {
+  Fragment,
+  useState,
+  type ChangeEvent,
+  type KeyboardEvent,
+} from "react";
 import { formatMoney } from "../../utils/money";
-import { useState } from "react";
+import type { ProductType } from "../home/Product";
 
-export function CartItemDetails({ cartItem, loadCart }) {
+type CartItem = {
+  productId: string;
+  quantity: number;
+  deliveryOptionId: string;
+  product: ProductType;
+};
+
+type CartItemDetailsProps = {
+  cartItem: CartItem;
+  loadCart: () => Promise<void> | void;
+};
+
+export function CartItemDetails({ cartItem, loadCart }: CartItemDetailsProps) {
   const [isUpdatingQuantity, setIsUpdatingQuantity] = useState(false);
-  const [quantity, setQuantity] = useState(cartItem.quantity);
+  const [quantity, setQuantity] = useState<string>(String(cartItem.quantity));
 
   const deleteCartItem = async () => {
     await axios.delete(`/api/cart-items/${cartItem.productId}`);
     await loadCart();
   };
 
-  const updateQuantityInput = (event) => {
+  const updateQuantityInput = (event: ChangeEvent<HTMLInputElement>) => {
     setQuantity(event.target.value);
   };
 
@@ -28,13 +45,13 @@ export function CartItemDetails({ cartItem, loadCart }) {
     }
   };
 
-  const handleQuantityKeyDown = (event) => {
+  const handleQuantityKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const keyPressed = event.key;
 
     if (keyPressed === "Enter") {
       updateQuantity();
     } else if (keyPressed === "Escape") {
-      setQuantity(cartItem.quantity);
+      setQuantity(String(cartItem.quantity));
       setIsUpdatingQuantity(false);
     }
   };

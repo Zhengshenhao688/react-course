@@ -2,9 +2,10 @@ import { it, expect, describe, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import { Header } from "./Header";
+import type { HeaderProps } from "./Header";
 
 describe("Header component", () => {
-  let cart;
+  let cart : HeaderProps["cart"];
 
   beforeEach(() => {
     cart = [
