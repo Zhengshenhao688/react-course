@@ -3,12 +3,44 @@ import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import axios from "axios";
 import { OrdersPage } from "./OrdersPage";
+// import type { ExtendedOrderType } from "./OrderDetailsGrid";
+import type { Mocked } from "vitest";
+import type { CartType } from "../../types";
+
+type CartItem = {
+  productId: string;
+  quantity: number;
+  deliveryOptionId: string;
+};
+
+type TestOrderProduct = {
+  productId: string;
+  quantity: number;
+  estimatedDeliveryTimeMs: number;
+  product: {
+    id: string;
+    image: string;
+    name: string;
+    rating: { stars: number; count: number };
+    priceCents: number;
+  };
+};
+
+type TestOrder = {
+  id: string;
+  orderTimeMs: number;
+  totalCostCents: number;
+  products: TestOrderProduct[];
+};
+
 
 vi.mock("axios");
+const mockedAxios = axios as Mocked<typeof axios>;
+const mockLoadCart = vi.fn();
 
 describe("OrdersPage compoment", () => {
-  let cart;
-  let orders;
+  let cart: CartItem[];
+  let orders: TestOrder[];
 
   beforeEach(() => {
     cart = [
@@ -87,7 +119,7 @@ describe("OrdersPage compoment", () => {
       },
     ];
 
-    axios.get.mockImplementation(async (urlPath) => {
+    mockedAxios.get.mockImplementation(async (urlPath) => {
       if (urlPath === "/api/orders?expand=products") {
         return { data: orders };
       }
@@ -97,7 +129,7 @@ describe("OrdersPage compoment", () => {
   it("renders order details correctly", async () => {
     render(
       <MemoryRouter>
-        <OrdersPage cart={cart} />
+        <OrdersPage cart={cart as unknown as CartType} loadCart={mockLoadCart} />
       </MemoryRouter>
     );
 

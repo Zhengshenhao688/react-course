@@ -7,4 +7,5 @@ export type ProductType = {
   rating: Rating;
   priceCents: number;
   keywords?: string[];
+  estimatedDeliveryTimeMs?: number; 
 };

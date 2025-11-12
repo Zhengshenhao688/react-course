@@ -6,7 +6,6 @@ export type OrderType = {
   totalCents: number;
   createdAt: string;
   status: "pending" | "paid" | "delivered";
-
   orderTimeMs: number;         
   totalCostCents: number;  
 };
