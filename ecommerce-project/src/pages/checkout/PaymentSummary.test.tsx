@@ -1,3 +1,4 @@
+import type { PaymentSummaryData } from "./PaymentSummary";
 import { it, expect, describe, vi, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter, useLocation } from "react-router";
@@ -8,9 +9,9 @@ import { PaymentSummary } from "./PaymentSummary";
 vi.mock("axios");
 
 describe("PaymentSummary component", () => {
-  let paymentSummary;
-  let loadCart;
-  let user;
+  let paymentSummary: PaymentSummaryData;
+  let loadCart: ReturnType<typeof vi.fn>;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     paymentSummary = {
@@ -27,7 +28,7 @@ describe("PaymentSummary component", () => {
     user = userEvent.setup();
   });
 
-  it("displays the correct ditails", async () => {
+  it("displays the correct details", async () => {
     render(
       <MemoryRouter>
         <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
@@ -83,3 +84,4 @@ describe("PaymentSummary component", () => {
     expect(screen.getByTestId('url-path')).toHaveTextContent('/order');
   });
 });
+

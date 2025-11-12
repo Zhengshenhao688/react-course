@@ -3,8 +3,13 @@ import CheckoutLockIcon from "../../assets/images/icons/checkout-lock-icon.png";
 import Logo from "../../assets/images/logo.png";
 import MobileLogo from "../../assets/images/mobile-logo.png";
 import "./CheckoutHeader.css";
+import type { CartItem } from "../../types";
 
-export function CheckoutHeader({ cart }) {
+type CheckoutHeaderProps = {
+  cart: CartItem[];
+};
+
+export function CheckoutHeader({ cart }: CheckoutHeaderProps) {
   /*
   let totalQuantity = 0;
   cart.forEach((cartItem) => {
@@ -12,7 +17,7 @@ export function CheckoutHeader({ cart }) {
   });
   */
   const totalQuantity = cart.reduce(
-    (total, cartItem) => total + cartItem.quantity,
+    (total: number, cartItem: CartItem) => total + cartItem.quantity,
     0
   );
 

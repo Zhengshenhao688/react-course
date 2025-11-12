@@ -6,14 +6,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { formatMoney } from "../../utils/money";
-import type { ProductType } from "../../types";
-
-type CartItem = {
-  productId: string;
-  quantity: number;
-  deliveryOptionId: string;
-  product: ProductType;
-};
+import type { CartItem } from "../../types";
 
 type CartItemDetailsProps = {
   cartItem: CartItem;
@@ -21,18 +14,25 @@ type CartItemDetailsProps = {
 };
 
 export function CartItemDetails({ cartItem, loadCart }: CartItemDetailsProps) {
+  // 是否处于更新数量的编辑状态，控制输入框的显示与隐藏
   const [isUpdatingQuantity, setIsUpdatingQuantity] = useState(false);
+  // 当前数量输入框的值，初始为购物车中该商品的数量
   const [quantity, setQuantity] = useState<string>(String(cartItem.quantity));
 
+  // 删除购物车中的该商品，调用接口后重新加载购物车数据
   const deleteCartItem = async () => {
     await axios.delete(`/api/cart-items/${cartItem.productId}`);
     await loadCart();
   };
 
+  // 处理数量输入框的变化事件，更新本地状态 quantity
   const updateQuantityInput = (event: ChangeEvent<HTMLInputElement>) => {
     setQuantity(event.target.value);
   };
 
+  // 更新商品数量的逻辑：
+  // 如果当前处于编辑状态，调用接口更新数量并退出编辑状态，刷新购物车
+  // 否则进入编辑状态，显示输入框
   const updateQuantity = async () => {
     if (isUpdatingQuantity) {
       await axios.put(`/api/cart-items/${cartItem.productId}`, {
@@ -45,6 +45,9 @@ export function CartItemDetails({ cartItem, loadCart }: CartItemDetailsProps) {
     }
   };
 
+  // 处理数量输入框的键盘事件：
+  // 按下 Enter 键时提交更新数量
+  // 按下 Escape 键时取消编辑，恢复原数量并退出编辑状态
   const handleQuantityKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     const keyPressed = event.key;
 

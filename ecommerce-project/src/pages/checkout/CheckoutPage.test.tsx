@@ -3,14 +3,41 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import axios from "axios";
 import { CheckoutPage } from "./CheckoutPage";
+import type { CartItem } from "../../types";
+import type { PaymentSummaryData } from "./PaymentSummary";
 
 vi.mock("axios");
+/**
+ * 👇 说明：
+ * 1. `vi.mock("axios")` 会在运行时把 axios 模块替换成 mock 对象，
+ *    但 TypeScript 类型系统并不知道它被 mock 了；
+ *    所以直接写 `axios.get.mockImplementation()` 会报错。
+ *
+ * 2. `typeof axios` 取出 axios 模块的类型。
+ *
+ * 3. `import("vitest").Mocked<T>` 是 Vitest 提供的类型工具，
+ *    能让类型系统知道对象的所有方法都是可 mock 的函数（带 .mockImplementation / .mockResolvedValue）。
+ *
+ * 4. `as unknown as ...` 是双重断言技巧：
+ *    - 先 `as unknown` 抹去旧类型；
+ *    - 再 `as import("vitest").Mocked<typeof axios>` 声明成 mock 类型；
+ *    这样 TypeScript 就不会报错。
+ *
+ * ✅ 效果：让 TypeScript 理解 axios 已被 mock，
+ *    并允许在测试中安全使用 mockedAxios.get.mockImplementation()。
+ */
+const mockedAxios = axios as unknown as import("vitest").Mocked<typeof axios>;
 
 describe("CheckoutPage component", () => {
-  let loadCart;
-  let cart;
-  let deliveryOptions;
-  let paymentSummary;
+  let loadCart: ReturnType<typeof vi.fn>;
+  let cart: CartItem[];
+  let deliveryOptions: {
+    id: string;
+    deliveryDays: number;
+    priceCents: number;
+    estimatedDeliveryTimeMs: number;
+  }[];
+  let paymentSummary: PaymentSummaryData;
 
   beforeEach(() => {
     loadCart = vi.fn();
@@ -80,13 +107,15 @@ describe("CheckoutPage component", () => {
       totalCostCents: 5251,
     };
 
-    axios.get.mockImplementation(async (url) => {
+
+    mockedAxios.get.mockImplementation(async (url: string) => {
       if (url === "/api/delivery-options?expand=estimatedDeliveryTime") {
         return { data: deliveryOptions };
       }
       if (url === "/api/payment-summary") {
         return { data: paymentSummary };
       }
+      return { data: {} };
     });
   });
 
@@ -97,7 +126,7 @@ describe("CheckoutPage component", () => {
       </MemoryRouter>
     );
 
-    const paymentSummary = await screen.findByTestId(
+    const paymentSummaryElem = await screen.findByTestId(
       "payment-summary-product-cost"
     );
 
@@ -115,7 +144,7 @@ describe("CheckoutPage component", () => {
       screen.getByText("Intermediate Size Basketball")
     ).toBeInTheDocument();
 
-    expect(paymentSummary).toBeInTheDocument();
+    expect(paymentSummaryElem).toBeInTheDocument();
     expect(screen.getByText("Payment Summary")).toBeInTheDocument();
     expect(
       screen.getByTestId("payment-summary-product-cost")

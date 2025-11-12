@@ -4,10 +4,25 @@ import { CheckoutHeader } from "./CheckoutHeader";
 import "./CheckoutPage.css";
 import { OrderSummary } from "./OrderSummary";
 import { PaymentSummary } from "./PaymentSummary";
+import type { CartItem } from "../../types";
+import type { PaymentSummaryData } from "./PaymentSummary";
 
-export function CheckoutPage({ cart, loadCart }) {
-  const [deliveryOptions, setDeliveryOptions] = useState([]);
-  const [paymentSummary, setPaymentSummary] = useState(null);
+type DeliveryOption = {
+  id: string;
+  deliveryDays: number;
+  priceCents: number;
+  estimatedDeliveryTimeMs: number;
+};
+
+type CheckoutPageProps = {
+  cart: CartItem[],
+  loadCart: () => Promise<void> | void;
+}
+
+
+export function CheckoutPage({ cart, loadCart }: CheckoutPageProps) {
+  const [deliveryOptions, setDeliveryOptions] = useState<DeliveryOption[]>([]);
+  const [paymentSummary, setPaymentSummary] = useState<PaymentSummaryData | null>(null);
 
   useEffect(() => {
     const fetchCheckoutData = async () => {
@@ -26,7 +41,7 @@ export function CheckoutPage({ cart, loadCart }) {
       setPaymentSummary(response.data);
     };
     fetchPaymentSummary();
-  });
+  },);
 
   return (
     <>
@@ -45,7 +60,10 @@ export function CheckoutPage({ cart, loadCart }) {
             loadCart={loadCart}
           />
 
-          <PaymentSummary paymentSummary={paymentSummary} loadCart={loadCart} />
+          <PaymentSummary
+            paymentSummary={paymentSummary || undefined}
+            loadCart={loadCart}
+          />
         </div>
       </div>
     </>

@@ -4,14 +4,18 @@ import { MemoryRouter } from "react-router";
 import userEvent from "@testing-library/user-event";
 import axios from "axios";
 import { OrderSummary } from "./OrderSummary";
+import type { CartItem } from "../../types";
+import type { DeliveryOption } from "./OrderSummary";
 
 vi.mock("axios");
 
+
+
 describe("OrderSummary component", () => {
-  let cart;
-  let deliveryOptions;
-  let loadCart;
-  let user;
+  let cart: CartItem[];
+  let deliveryOptions: DeliveryOption[];
+  let loadCart: ReturnType<typeof vi.fn>;
+  let user: ReturnType<typeof userEvent.setup>;
 
   beforeEach(() => {
     cart = [
@@ -109,9 +113,9 @@ describe("OrderSummary component", () => {
       "delivery-option-input"
     );
     expect(deliveryOptionInputs.length).toBe(3);
-    expect(deliveryOptionInputs[0].checked).toBe(true);
-    expect(deliveryOptionInputs[1].checked).toBe(false);
-    expect(deliveryOptionInputs[2].checked).toBe(false);
+    expect((deliveryOptionInputs[0] as HTMLInputElement).checked).toBe(true);
+    expect((deliveryOptionInputs[1] as HTMLInputElement).checked).toBe(false);
+    expect((deliveryOptionInputs[2] as HTMLInputElement).checked).toBe(false);
 
     expect(
       within(cartItemContainers[1]).getByTestId("cart-item-image")
@@ -133,9 +137,9 @@ describe("OrderSummary component", () => {
       "delivery-option-input"
     );
     expect(deliveryOptionInputs.length).toBe(3);
-    expect(deliveryOptionInputs[0].checked).toBe(false);
-    expect(deliveryOptionInputs[1].checked).toBe(true);
-    expect(deliveryOptionInputs[2].checked).toBe(false);
+    expect((deliveryOptionInputs[0] as HTMLInputElement).checked).toBe(false);
+    expect((deliveryOptionInputs[1] as HTMLInputElement).checked).toBe(true);
+    expect((deliveryOptionInputs[2] as HTMLInputElement).checked).toBe(false);
   });
 
   it("delete a cart item", async () => {
