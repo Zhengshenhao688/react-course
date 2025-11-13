@@ -61,7 +61,29 @@
 📂 路径：`./old-projects`
 
 ---
+# 🖼️ 项目截图展示
 
+以下是本仓库中部分项目页面截图：
+
+## 🛍️ 电商项目（ecommerce-project）
+
+### 首页（Home）
+![Ecommerce Home](assets/ecommerce-home.png)
+
+### 购物车 & 结账（Checkout）
+![Ecommerce Checkout](assets/ecommerce-checkout.png)
+
+### 订单列表（Orders）
+![Ecommerce Orders](assets/ecommerce-orders.png)
+
+### 订单追踪（Tracking）
+![Ecommerce Tracking](assets/ecommerce-tracking.png)
+
+---
+
+## 🤖 聊天机器人项目（chatbot-project）
+
+![Chatbot Screenshot](assets/chatbot.png)
 ## 🚀 项目运行方式
 
 ### ▶️ 运行电商前端（ecommerce-project）
