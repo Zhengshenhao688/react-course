@@ -59,6 +59,21 @@ including product listing, cart, checkout flow, order history, order tracking, a
 - Vitest + React Testing Library
 
 ---
+## 🖼️ Preview
+
+### 🏠 Home Page
+![Home](assets/ecommerce-home.png)
+
+### 🛒 Checkout Page
+![Checkout](assets/ecommerce-checkout.png)
+
+### 📦 Orders Page
+![Orders](assets/ecommerce-orders.png)
+
+### 🚚 Tracking Page
+![Tracking](assets/ecommerce-tracking.png)
+
+---
 
 ## 📁 Project Structure & File Explanations
 
