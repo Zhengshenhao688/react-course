@@ -5,7 +5,7 @@ import MobileLogo from "../../assets/images/mobile-logo.png";
 import "./CheckoutHeader.css";
 import type { CartItem } from "../../types";
 
-type CheckoutHeaderProps = {
+interface CheckoutHeaderProps  {
   cart: CartItem[];
 };
 

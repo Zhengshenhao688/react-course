@@ -20,7 +20,7 @@ type OrderType = {
   products: OrderProduct[];
 };
 
-type TrackingPageProps = {
+interface TrackingPageProps  {
   cart: CartItem[];
 }
 

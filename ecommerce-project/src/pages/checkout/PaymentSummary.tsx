@@ -11,7 +11,7 @@ export type PaymentSummaryData = {
   totalCostCents: number;
 };
 
-export type PaymentSummaryProps = {
+export interface PaymentSummaryProps  {
   paymentSummary?: PaymentSummaryData;
   loadCart: () => Promise<void> | void;
 }

@@ -7,14 +7,13 @@ import "./HomePage.css";
 import { useSearchParams } from "react-router";
 import type { CartItem } from "../../types";
 
-type HomePageProps = {
+interface HomePageProps {
   cart: CartItem[];
   loadCart: () => Promise<void> | void;
-};
+}
 
 // use the ProductType defined by the Product component
 // so all components agree on the product shape
-
 
 export function HomePage({ cart, loadCart }: HomePageProps) {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -23,8 +22,10 @@ export function HomePage({ cart, loadCart }: HomePageProps) {
 
   useEffect(() => {
     const getHomeData = async () => {
-      const urlPath = search ? `/api/products?search=${search}` : "/api/products";
-  const response = await axios.get<ProductType[]>(urlPath);
+      const urlPath = search
+        ? `/api/products?search=${search}`
+        : "/api/products";
+      const response = await axios.get<ProductType[]>(urlPath);
       setProducts(response.data || []);
     };
 

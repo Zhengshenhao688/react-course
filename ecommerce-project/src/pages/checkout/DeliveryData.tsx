@@ -6,7 +6,7 @@ import type { CartItem } from "../../types";
 // DeliveryDataProps 定义了组件接收的 props 结构，包含配送选项列表和购物车中的单个商品信息。
 // deliveryOptions 是一个数组，包含多个配送选项，每个选项有唯一 id 和预计送达时间的时间戳。
 // cartItem 表示购物车中的商品，包含所选的配送选项 id。
-type DeliveryDataProps = {
+interface DeliveryDataProps  {
   deliveryOptions: {
     id: string;
     estimatedDeliveryTimeMs: number;

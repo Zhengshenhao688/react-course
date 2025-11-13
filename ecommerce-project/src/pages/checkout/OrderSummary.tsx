@@ -10,7 +10,7 @@ export type DeliveryOption = {
   estimatedDeliveryTimeMs: number;
 };
 
-type OrderSummaryProps = {
+interface OrderSummaryProps  {
   cart: CartItem[];
   deliveryOptions: DeliveryOption[];
   loadCart: () => Promise<void> | void;

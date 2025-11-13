@@ -22,7 +22,7 @@ type DeliveryOption = {
  * DeliveryOptionsProps 类型定义了 DeliveryOptions 组件所需的 props，
  * 包括配送选项数组 deliveryOptions，当前购物车项 cartItem，以及刷新购物车的函数 loadCart。
  */
-type DeliveryOptionsProps = {
+interface DeliveryOptionsProps  {
   deliveryOptions: DeliveryOption[];
   cartItem: CartItem;
   loadCart: () => Promise<void> | void;

@@ -8,7 +8,7 @@ import {
 import { formatMoney } from "../../utils/money";
 import type { CartItem } from "../../types";
 
-type CartItemDetailsProps = {
+interface CartItemDetailsProps  {
   cartItem: CartItem;
   loadCart: () => Promise<void> | void;
 };

@@ -1,12 +1,12 @@
 import { Product } from "./Product";
 import type { ProductType } from "../../types";
 
-type Props = {
+interface ProductsGridProps  {
   products: ProductType[];
   loadCart: () => Promise<void> | void;
 };
 
-export function ProductsGrid({ products, loadCart }: Props) {
+export function ProductsGrid({ products, loadCart }: ProductsGridProps) {
   return (
     <div className="products-grid">
       {products.map((product: ProductType) => {

@@ -14,7 +14,7 @@ type DeliveryOption = {
   estimatedDeliveryTimeMs: number;
 };
 
-type CheckoutPageProps = {
+interface CheckoutPageProps  {
   cart: CartItem[],
   loadCart: () => Promise<void> | void;
 }

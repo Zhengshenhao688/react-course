@@ -4,12 +4,12 @@ import axios from "axios";
 import { useState, type ChangeEvent } from "react";
 import type { ProductType } from "../../types";
 
-type Props = {
+interface ProductProps {
   product: ProductType;
   loadCart: () => Promise<void> | void;
 };
 
-export function Product({ product, loadCart }: Props) {
+export function Product({ product, loadCart }: ProductProps) {
   const [quantity, setQuantity] = useState<number>(1);
   const [showAddedMessage, setShowAddedMessage] = useState<boolean>(false);
 
