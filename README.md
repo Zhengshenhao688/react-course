@@ -3,6 +3,12 @@
 这个仓库包含我在学习 **React / TypeScript / Vite / Node.js 后端 / 全栈开发 / 测试** 过程中完成的多个项目。  
 包括完整的电商网站前端、电商后端、聊天机器人项目，以及早期练习项目。
 
+# 🌱 React Learning Archive (2025)
+
+This repository contains all projects I built while learning React, TypeScript,
+Vite, and basic backend development.  
+It records my complete learning path from beginner → intermediate → full-stack.
+
 ---
 
 ## 📁 项目总览
